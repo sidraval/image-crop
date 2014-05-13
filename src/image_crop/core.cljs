@@ -4,7 +4,6 @@
 (enable-console-print!)
 
 (def aspect-ratio 2)
-(def differences (js-obj))
 (defn img [] ($ :#image))
 (defn box [] ($ :#frame))
 
@@ -17,10 +16,12 @@
   (on (box) :click move-box))
 
 (defn bind-mousemove [e]
-  (do
-    (on (box) :mousemove move-box)
-    (set! (.-y differences) (-  (.-pageY e) (:top (position (box)))))
-    (set! (.-x differences) (-  (.-pageX e) (:left (position (box)))))))
+  (on (box) :mousemove ((fn [x y]
+                          (fn [ev]
+                            (do
+                              (css (box) {:left (- (.-pageX ev) x)})
+                              (css (box) {:top (- (.-pageY ev) y)}))))
+                        (- (.-pageX e) (:left (position (box)))) (- (.-pageY e) (:top (position (box)))))))
 
 (defn unbind-mousemove []
   (off (box) :mousemove))
