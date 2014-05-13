@@ -1,0 +1,19 @@
+.frame {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  top: 30px;
+  left: 30px;
+  border: 10px solid rgb(216, 216, 216);
+  cursor: crosshair;
+}
+
+.resize-box {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: url('img/resize.png') -7px -7px;
+  top: 140px;
+  cursor: pointer;
+  left: 240px;
+}
