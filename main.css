@@ -10,10 +10,10 @@
 
 .resize-box {
   position: absolute;
+  bottom: -10px;
+  right: -10px;
   width: 10px;
   height: 10px;
   background: url('img/resize.png') -7px -7px;
-  top: 140px;
   cursor: pointer;
-  left: 240px;
 }
