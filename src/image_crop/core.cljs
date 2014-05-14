@@ -27,21 +27,24 @@
 
 (defn bind-resize []
   (do
-    (on (img) :mousemove #(println "YES"))
+    (on ($ :body) :mousemove change-width)
     false))
 
-(defn change-width []
-  )
+(defn change-width [e]
+  (do
+    (css (box) {:width (- (.-pageX e) (:left (position (box))) 10)})
+    (css (box) {:height (* (/ 1 aspect-ratio) (width (box)))})))
 
 (defn unbind-resize []
-  (off (img) :mousemove))
+  (off ($ :body) :mousemove))
 
 (defn bind-mousedown []
   (do
     (on (box) :mousedown bind-mousemove)
     (on (box) :mouseup unbind-mousemove)
     (on (resize) :mousedown bind-resize)
-    (on (resize) :mouseup unbind-resize)))
+    (on (resize) :mouseup unbind-resize)
+    (on (img) :mouseup unbind-resize)))
 
 (defn initialize []
   (bind-mousedown))
