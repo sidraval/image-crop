@@ -7,21 +7,19 @@
 (defn img [] ($ :#image))
 (defn box [] ($ :#frame))
 
-(defn move-box [e]
+(defn move-box [x y e]
   (do
-    (css (box) {:left (- (.-pageX e) (.-x differences))})
-    (css (box) {:top (- (.-pageY e) (.-y differences))})))
+    (css (box) {:left (- (.-pageX e) x)})
+    (css (box) {:top (- (.-pageY e) y)})))
 
 (defn drag-box []
   (on (box) :click move-box))
 
 (defn bind-mousemove [e]
-  (on (box) :mousemove ((fn [x y]
-                          (fn [ev]
-                            (do
-                              (css (box) {:left (- (.-pageX ev) x)})
-                              (css (box) {:top (- (.-pageY ev) y)}))))
-                        (- (.-pageX e) (:left (position (box)))) (- (.-pageY e) (:top (position (box)))))))
+  (on (box) :mousemove (partial move-box (click-difference (.-pageX e) :left) (click-difference (.-pageY e) :top))))
+
+(defn click-difference [mouse-coord corner]
+  (- mouse-coord (corner (position (box)))))
 
 (defn unbind-mousemove []
   (off (box) :mousemove))
