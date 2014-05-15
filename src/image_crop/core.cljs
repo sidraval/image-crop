@@ -46,7 +46,4 @@
     (on (resize) :mouseup unbind-resize)
     (on (img) :mouseup unbind-resize)))
 
-(defn initialize []
-  (bind-mousedown))
-
-(document-ready initialize)
+(document-ready bind-mousedown)
